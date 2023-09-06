@@ -46,7 +46,9 @@ export default function LoginScreen({ changeScreen }) {
         </Pressable>
       </View>
       <View style={styles.container}>
-        <Text style={styles.header}>Enter your username to log in.</Text>
+        <Text style={{ fontSize: 25, fontWeight: "bold", marginBottom: 20 }}>
+          Enter your username to log in.
+        </Text>
         <TextInput
           style={styles.input}
           placeholder="Username"

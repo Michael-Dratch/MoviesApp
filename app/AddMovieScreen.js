@@ -45,7 +45,9 @@ export default function AddMovieScreen({ changeScreen }) {
         </Pressable>
       </View>
       <View style={styles.container}>
-        <Text styles={styles.header}>Add a new movie.</Text>
+        <Text style={{ fontSize: 30, fontWeight: "bold", marginBottom: 20 }}>
+          Add a new movie.
+        </Text>
         <TextInput
           style={styles.input}
           placeholder="Movie title"

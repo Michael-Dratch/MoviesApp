@@ -6,39 +6,57 @@ import {
   View,
   TextInput,
   Button,
+  Pressable,
+  Image,
 } from "react-native";
 
-export default function MoviesScreen({ changeScreen }) {
+export default function MoviesScreen({ changeScreen, goToEditScreen }) {
   const data = [
-    { id: 1, name: "John", email: "john@gmail.com" },
-    { id: 2, name: "Bob", email: "bob@gmail.com" },
-    { id: 3, name: "Mei", email: "mei@gmail.com" },
-    { id: 4, name: "Steve", email: "steve@gmail.com" },
+    { name: "John", rating: 100 },
+    { name: "Bob", rating: 100 },
+    { name: "Mei", rating: 100 },
+    { name: "Steve", rating: 100 },
+    { name: "Steve", rating: 100 },
   ];
   const item = ({ item }) => (
     <View style={styles.row}>
-      <View style={{ width: "10%", backgroundColor: "lightyellow" }}>
-        <Text style={{ fontSize: 16, fontWeight: "bold", textAlign: "center" }}>
-          {item.id}
-        </Text>
-      </View>
-      <View style={{ width: "60%", backgroundColor: "lightpink" }}>
+      <View
+        style={{
+          width: "60%",
+          borderWidth: 1,
+          borderStyle: "solid",
+          borderColor: "Black",
+          padding: 10,
+        }}
+      >
         <Text style={{ fontSize: 16, fontWeight: "bold", textAlign: "center" }}>
           {item.name}
         </Text>
       </View>
-      <View style={{ width: "20%", backgroundColor: "lavender" }}>
+      <View
+        style={{
+          width: "30%",
+          borderWidth: 1,
+          borderStyle: "solid",
+          borderColor: "Black",
+          padding: 10,
+        }}
+      >
         <Text style={{ fontSize: 16, fontWeight: "bold", textAlign: "center" }}>
-          {item.email}
+          {item.rating}
         </Text>
       </View>
-      <View style={{ width: "10%", backgroundColor: "lavender" }}>
-        <Button
-          title="Edit"
+      <View style={styles.editCell}>
+        <Pressable
           onPress={() => {
-            changeScreen("EditMovieScreen");
+            goToEditScreen(item.name);
           }}
-        />
+        >
+          <Image
+            style={styles.image}
+            source={require("../assets/pencil.png")}
+          ></Image>
+        </Pressable>
       </View>
     </View>
   );
@@ -52,11 +70,10 @@ export default function MoviesScreen({ changeScreen }) {
           }}
         />
       </View>
-      <FlatList
-        data={data}
-        renderItem={item}
-        keyExtractor={(item) => item.id.toString()}
-      />
+      <View style={styles.navbar}>
+        <Text style={{ fontSize: 30, fontWeight: "bold" }}>Movie Ratings</Text>
+      </View>
+      <FlatList data={data} renderItem={item} />
       <Button
         title="Add Movie"
         onPress={() => {
@@ -75,8 +92,29 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
   },
   head: { height: 44, backgroundColor: "lavender" },
-  row: { flexDirection: "row", borderColor: "blue" },
+  hearer: { fontSize: 20, fontWeight: "bold" },
+  row: {
+    flexDirection: "row",
+    marginTop: 10,
+  },
+  cell: {
+    borderStyle: "solid",
+    borderColor: "black",
+  },
   navbar: {
-    backgroundColor: "#0000ff",
+    padding: 10,
+  },
+  image: {
+    width: 20,
+    height: 20,
+  },
+  editCell: {
+    width: "20%",
+    borderWidth: 1,
+    borderStyle: "solid",
+    borderColor: "Black",
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
   },
 });

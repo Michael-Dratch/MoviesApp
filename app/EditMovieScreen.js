@@ -1,8 +1,17 @@
-import { StyleSheet, Text, View, TextInput, Button } from "react-native";
+import {
+  SafeAreaView,
+  Pressable,
+  StyleSheet,
+  Text,
+  View,
+  TextInput,
+  Button,
+  Image,
+} from "react-native";
 import React, { useEffect, useCallback, useState } from "react";
 import { useForm } from "react-hook-form";
 
-export default function EditMovieScreen({ movieTitle }) {
+export default function EditMovieScreen({ movieTitle, changeScreen }) {
   const { register, handleSubmit, setValue } = useForm();
 
   const onSubmit = useCallback((formData) => {
@@ -21,20 +30,36 @@ export default function EditMovieScreen({ movieTitle }) {
   }, [register]);
 
   return (
-    <View style={styles.container}>
-      <Text styles={styles.header}>Edit Movie Rating.</Text>
-      <Text>{movieTitle}</Text>
-      <TextInput
-        style={styles.input}
-        placeholder="Rating"
-        onChangeText={onChangeField("rating")}
-      />
-      <Button
-        title="Update Movie Rating"
-        onPress={handleSubmit(onSubmit)}
-        style={styles.submitButton}
-      />
-    </View>
+    <SafeAreaView>
+      <View style={styles.navbar}>
+        <Pressable
+          onPress={() => {
+            changeScreen("MoviesScreen");
+          }}
+        >
+          <Image
+            style={styles.image}
+            source={require("../assets/back.png")}
+          ></Image>
+        </Pressable>
+      </View>
+      <View style={styles.container}>
+        <Text style={{ fontSize: 30, fontWeight: "bold", marginBottom: 20 }}>
+          Edit Movie Rating.
+        </Text>
+        <Text style={{ fontSize: 30, marginBottom: 20 }}>{movieTitle}</Text>
+        <TextInput
+          style={styles.input}
+          placeholder="Rating"
+          onChangeText={onChangeField("rating")}
+        />
+        <Button
+          title="Update Movie Rating"
+          onPress={handleSubmit(onSubmit)}
+          style={styles.submitButton}
+        />
+      </View>
+    </SafeAreaView>
   );
 }
 
@@ -55,5 +80,13 @@ const styles = StyleSheet.create({
   header: {
     fontWeight: "bold",
     margin: 20,
+  },
+  image: {
+    width: 40,
+    height: 40,
+  },
+  navbar: {
+    marginTop: 50,
+    right: 60,
   },
 });

@@ -7,17 +7,33 @@ import EditMovieScreen from "./app/EditMovieScreen.js";
 
 export default function App() {
   const [screenType, setScreen] = useState("");
+  const [editMovieTitle, setEditMovieTitle] = useState("");
 
   const changeScreen = (screenType) => {
     setScreen(screenType);
   };
+
+  const goToEditScreen = (movieTitle) => {
+    setEditMovieTitle(movieTitle);
+    setScreen("EditMovieScreen");
+  };
   let screen;
   switch (screenType) {
     case "":
-      screen = <MoviesScreen changeScreen={changeScreen}></MoviesScreen>;
+      screen = (
+        <MoviesScreen
+          changeScreen={changeScreen}
+          goToEditScreen={goToEditScreen}
+        ></MoviesScreen>
+      );
       break;
     case "MoviesScreen":
-      screen = <MoviesScreen changeScreen={changeScreen}></MoviesScreen>;
+      screen = (
+        <MoviesScreen
+          changeScreen={changeScreen}
+          goToEditScreen={goToEditScreen}
+        ></MoviesScreen>
+      );
       break;
     case "LoginScreen":
       screen = <LoginScreen changeScreen={changeScreen}></LoginScreen>;
@@ -26,7 +42,12 @@ export default function App() {
       screen = <AddMovieScreen changeScreen={changeScreen}></AddMovieScreen>;
       break;
     case "EditMovieScreen":
-      screen = <EditMovieScreen></EditMovieScreen>;
+      screen = (
+        <EditMovieScreen
+          movieTitle={editMovieTitle}
+          changeScreen={changeScreen}
+        ></EditMovieScreen>
+      );
       break;
   }
 
