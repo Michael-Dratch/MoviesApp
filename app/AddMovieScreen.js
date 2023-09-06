@@ -1,8 +1,17 @@
-import { StyleSheet, Text, View, TextInput, Button } from "react-native";
+import {
+  StyleSheet,
+  SafeAreaView,
+  Text,
+  View,
+  TextInput,
+  Button,
+  Pressable,
+  Image,
+} from "react-native";
 import React, { useEffect, useCallback, useState } from "react";
-import { useForm, Controller } from "react-hook-form";
+import { useForm } from "react-hook-form";
 
-export default function AddMovieScreen() {
+export default function AddMovieScreen({ changeScreen }) {
   const { register, handleSubmit, setValue } = useForm();
 
   const onSubmit = useCallback((formData) => {
@@ -22,24 +31,38 @@ export default function AddMovieScreen() {
   }, [register]);
 
   return (
-    <View style={styles.container}>
-      <Text>Add a new movie.</Text>
-      <TextInput
-        style={styles.input}
-        placeholder="Movie title"
-        onChangeText={onChangeField("title")}
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Rating"
-        onChangeText={onChangeField("rating")}
-      />
-      <Button
-        title="Submit Movie"
-        onPress={handleSubmit(onSubmit)}
-        style={styles.submitButton}
-      />
-    </View>
+    <SafeAreaView>
+      <View style={styles.navbar}>
+        <Pressable
+          onPress={() => {
+            changeScreen("MoviesScreen");
+          }}
+        >
+          <Image
+            style={styles.image}
+            source={require("../assets/back.png")}
+          ></Image>
+        </Pressable>
+      </View>
+      <View style={styles.container}>
+        <Text styles={styles.header}>Add a new movie.</Text>
+        <TextInput
+          style={styles.input}
+          placeholder="Movie title"
+          onChangeText={onChangeField("title")}
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="Rating"
+          onChangeText={onChangeField("rating")}
+        />
+        <Button
+          title="Submit Movie"
+          onPress={handleSubmit(onSubmit)}
+          style={styles.submitButton}
+        />
+      </View>
+    </SafeAreaView>
   );
 }
 
@@ -56,5 +79,18 @@ const styles = StyleSheet.create({
     borderColor: "#ccc",
     borderWidth: 1,
     borderRadius: 4,
+  },
+  header: {
+    fontWeight: "bold",
+    margin: 20,
+  },
+  image: {
+    width: 40,
+    height: 40,
+  },
+  navbar: {
+    marginTop: 50,
+    right: 60,
+    width: "100%",
   },
 });

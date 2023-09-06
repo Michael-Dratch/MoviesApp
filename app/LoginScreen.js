@@ -1,28 +1,62 @@
 // src/LoginScreen.js
-import React, { useState } from "react";
-import { View, Text, TextInput, Button, StyleSheet } from "react-native";
-import { useForm, Controller } from "react-hook-form";
+import React, { useEffect, useCallback, useState } from "react";
+import {
+  View,
+  SafeAreaView,
+  Text,
+  TextInput,
+  Button,
+  StyleSheet,
+  Image,
+  Pressable,
+} from "react-native";
+import { useForm } from "react-hook-form";
 
-const LoginScreen = () => {
+export default function LoginScreen({ changeScreen }) {
   const [username, setUsername] = useState("");
+  const { register, handleSubmit, setValue } = useForm();
 
-  const handleLogin = () => {
-    // Implement your authentication logic here
-  };
+  const onSubmit = useCallback((formData) => {
+    console.log(formData);
+  }, []);
+
+  const onChangeField = useCallback(
+    (name) => (text) => {
+      setValue(name, text);
+    },
+    []
+  );
+
+  useEffect(() => {
+    register("username");
+  }, [register]);
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.header}>Enter your username to log in.</Text>
-      <TextInput
-        style={styles.input}
-        placeholder="Username"
-        onChangeText={(text) => setUsername(text)}
-        value={username}
-      />
-      <Button title="Login" onPress={handleLogin} />
-    </View>
+    <SafeAreaView>
+      <View style={styles.navbar}>
+        <Pressable
+          onPress={() => {
+            changeScreen("MoviesScreen");
+          }}
+        >
+          <Image
+            style={styles.image}
+            source={require("../assets/back.png")}
+          ></Image>
+        </Pressable>
+      </View>
+      <View style={styles.container}>
+        <Text style={styles.header}>Enter your username to log in.</Text>
+        <TextInput
+          style={styles.input}
+          placeholder="Username"
+          onChangeText={onChangeField("username")}
+        />
+        <Button title="Log in" onPress={handleSubmit(onSubmit)} />
+      </View>
+    </SafeAreaView>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -42,6 +76,11 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 4,
   },
+  image: {
+    width: 40,
+    height: 40,
+  },
+  navbar: {
+    marginTop: 50,
+  },
 });
-
-export default LoginScreen;
